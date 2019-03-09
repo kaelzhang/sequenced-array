@@ -64,7 +64,7 @@ module.exports = class SequencedArray extends Array {
       return [min, min + 1]
     }
 
-    // r_min > 0 || r_min === undefined
+    // else: r_min > 0 || r_min === undefined
 
     const r_max = this.match(score, max)
     if (r_max === 0) {
@@ -75,7 +75,7 @@ module.exports = class SequencedArray extends Array {
       return [max, max + 1]
     }
 
-    // r_max < 0 || r_max === undefined
+    // else: r_max < 0 || r_max === undefined
 
     // There is no items between min and max
     if (min + 1 === max) {
@@ -85,6 +85,8 @@ module.exports = class SequencedArray extends Array {
     if (r_min === undefined || r_max === undefined) {
       return this._find(score, min + 1, max - 1)
     }
+
+    // else: r_min > 0 && r_max < 0
 
     const mid = Math.floor((min + max) / 2)
     const r_mid = this.match(score, mid)
@@ -104,6 +106,9 @@ module.exports = class SequencedArray extends Array {
         : this._find(score, min + 1, mid - 1)
     }
 
+    // r_mid === undefined
+    //  so that we can not determin the direction of next setup,
+    //  just narrow down the range.
     return this._find(score, min + 1, max - 1)
   }
 
