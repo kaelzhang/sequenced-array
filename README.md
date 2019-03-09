@@ -32,10 +32,16 @@ import SequencedArray from 'sequenced-array'
 ## new SequencedArray(arrayLength, {desc, compare})
 ## new SequencedArray(array, {desc, compare})
 
-- **desc** `?boolean=false` Whether the array should be sorted in decending order. By default `SequencedArray`s are in ascending order.
-- **compare** `?Function=(a, b) => a - b` The compare function as the same as the `compareFunction` of `Array.prototype.filter(compareFunction)`
+```js
+class SequencedArray extends Array {}
+```
 
-Creates a `SequencedArray`.
+`SequencedArray` is a subclass of `Array`, so that its instances inherit all methods, getters and setters of normal arrays.
+
+- **desc** `?boolean=false` Whether the array should be sorted in decending order. By default `SequencedArray`s are in ascending order.
+- **compare** `?Function=(a, b) => a - b` The compare function as the same as the `compareFunction` of `Array.prototype.filter(compareFunction)`. So that we can compare array items which are not numbers
+
+Creates a `SequencedArray`
 
 ```js
 // creates an empty array
@@ -61,18 +67,18 @@ console.log(orderBook[1])   // {price: 2, amount: 1}
 console.log(orderBook[2])   // {price: 1, amount: 2}
 ```
 
-### match(item, index): number | undefined
+### array.match(item, index): number | undefined
 
 - **item** `any`
 - **index** `number`
 
-Matches `item` with the item at index `index`
+Matches the `item` with `array[index]`
 
 Returns
 - `< 0` indicates that `item` should be before the index `index`
 - `= 0` indicates that `item` equals the item at index `index`
 - `> 0` indicates that `item` should be after the index `index`
-- `undefined` indicates that the item at index `index` is an empty item, so it can not match `item`
+- `undefined` indicates that `array[index]` is an empty item, so it is not matchable.
 
 ```js
 const arr = new SequencedArray(4)
@@ -83,7 +89,7 @@ arr.match(3, 2)     // 1
 arr.match(2, 2)     // 0
 ```
 
-### find(item): Array<number>
+### array.find(item): Array<number>
 
 Finds which location should `item` be located at.
 
@@ -96,7 +102,7 @@ new SequencedArray([1, 2, 3, 4]).find(2.5)  // [1, 2]
 new SequencedArray([1, 2, 3, 4]).find(2)    // [1, 1]
 ```
 
-### insert(item): {index: number, inserted: boolean}
+### array.insert(item): {index: number, inserted: boolean}
 
 Insert `item` into the array and maintains the sorting order.
 
