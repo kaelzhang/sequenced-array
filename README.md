@@ -26,8 +26,21 @@ $ npm i sequenced-array
 ## Usage
 
 ```js
-import sequenced_array from 'sequenced-array'
+import SequencedArray from 'sequenced-array'
+
+const array = new SequencedArray()
 ```
+
+## new SequencedArray({desc, compare})
+
+- **desc** `?boolean=false` Whether the array should be sorted in decending order. By default `SequencedArray`s are in ascending order.
+- **compare** `?Function=(a, b) => a - b`
+
+### .insert(item)
+
+### .find(item)
+
+### .match(item, index)
 
 ## License
 
