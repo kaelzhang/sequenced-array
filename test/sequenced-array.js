@@ -3,7 +3,9 @@ const log = require('util').debuglog('sequenced-array')
 const SequencedArray = require('../src')
 
 const runOne = (array, item, expected, desc, compare) => {
-  const message = `${item} -> ${JSON.stringify(array)}: ${
+  const message = `${item} -> ${JSON.stringify(array)}, desc: ${
+    desc
+  } => ${
     JSON.stringify(expected)}`
   test(message, t => {
     const sa = new SequencedArray(array, {desc, compare})
@@ -16,32 +18,51 @@ const runOne = (array, item, expected, desc, compare) => {
   })
 }
 
-const createCases = (array, sign = 1) => [
-  [- 1, {index: 0, inserted: true}],
-  ...array.map(i => [i, {index: i, inserted: false}]),
-  ...array.map(i => [i + 0.5 * sign, {index: i + sign, inserted: true}])
+const createCases = (array, sign) => [
+  [- 1, {
+    index: sign === 1
+      ? 0
+      : array.length,
+    inserted: true
+  }],
+  ...array.map(i => [i, {
+    index: sign === 1
+      ? i
+      : array.length - i - 1,
+    inserted: false
+  }]),
+  ...array.map(i => [i + 0.5 * sign, {
+    index: sign === 1
+      ? i + sign
+      : array.length - i,
+    inserted: true
+  }])
 ]
 
-const runCases = (array, cases) => cases.forEach(([
+const runCases = (array, cases, desc) => cases.forEach(([
   item,
   expected
 ]) => {
-  runOne(array, item, expected)
+  runOne(array, item, expected, desc)
 })
 
-const createArray = length => {
+const createArray = (length, sign = 1) => {
   const array = []
-  let i = - 1
-  while (++ i < length) {
+  let i = sign === 1
+    ? 0
+    : length - 1
+  while (i < length && i > - 1) {
     array.push(i)
+    i += sign
   }
 
   return array
 }
 
-const run = length => {
-  const array = createArray(length)
-  runCases(array, createCases(array))
+const run = (sign, desc = false) => length => {
+  const array = createArray(length, sign)
+  runCases(array, createCases(array, sign), desc)
 }
 
-createArray(10).forEach(run)
+createArray(10).forEach(run(1))
+createArray(10).forEach(run(- 1, true))
