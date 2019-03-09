@@ -39,7 +39,7 @@ class SequencedArray extends Array {}
 `SequencedArray` is a subclass of `Array`, so that its instances inherit all methods, getters and setters of normal arrays.
 
 - **desc** `?boolean=false` Whether the array should be sorted in decending order. By default `SequencedArray`s are in ascending order.
-- **compare** `?Function=(a, b) => a - b` The compare function as the same as the `compareFunction` of `Array.prototype.filter(compareFunction)`. So that we can compare array items which are not numbers
+- **compare** `?Function=(a, b) => a - b` The compare function as the same as the `compareFunction` of `Array.prototype.filter(compareFunction)`. So that we can compare array items which are not numbers.
 
 Creates a `SequencedArray`
 
@@ -94,7 +94,7 @@ arr.match(2, 2)     // 0
 Finds which location should `item` be located at.
 
 Returns `[min, max]`
-- If `min` equals to `max`, it indicates that `item` is equals to `array[index]`
+- If `min` equals to `max`, it indicates that `item` is equals to `array[min]`
 - Otherwise, it indicates that `item` could be inserted between index `min` and index `max`
 
 ```js
