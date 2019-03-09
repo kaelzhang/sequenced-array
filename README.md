@@ -61,7 +61,7 @@ console.log(orderBook[1])   // {price: 2, amount: 1}
 console.log(orderBook[2])   // {price: 3, amount: 2}
 ```
 
-### .match(item, index): number | undefined
+### match(item, index): number | undefined
 
 - **item** `any`
 - **index** `number`
@@ -83,7 +83,7 @@ arr.match(3, 2)     // 1
 arr.match(2, 2)     // 0
 ```
 
-### .find(item): Array<number>
+### find(item): Array<number>
 
 Finds which location should `item` be located at.
 
@@ -96,7 +96,7 @@ new SequencedArray([1, 2, 3, 4]).find(2.5)  // [1, 2]
 new SequencedArray([1, 2, 3, 4]).find(2)    // [1, 1]
 ```
 
-### .insert(item): {index: number, inserted: boolean}
+### insert(item): {index: number, inserted: boolean}
 
 Insert `item` into the array and maintains the sorting order.
 
