@@ -1,6 +1,11 @@
 const DEFAULT_COMPARE = (a, b) => a - b
-const makeArray = init => Array.isArray(init)
-  ? init
+
+const isSingleItemArray = array => Array.isArray(array) && array.length === 1
+
+const createArgs = init => Array.isArray(init)
+  ? init.length === 1
+    ? []
+    : init
   : [init]
 
 module.exports = class SequencedArray extends Array {
@@ -8,7 +13,13 @@ module.exports = class SequencedArray extends Array {
     desc,
     compare = DEFAULT_COMPARE
   } = {}) {
-    super(...makeArray(init))
+    super(...createArgs(init))
+
+    // new Array(1, 2)     -> [1, 2]
+    // new Array(1)        -> [<1 empty item>] -> WTF!
+    if (isSingleItemArray(init)) {
+      this.push(init[0])
+    }
 
     // Default to low -> high
     this._sign = desc
@@ -27,14 +38,20 @@ module.exports = class SequencedArray extends Array {
       return - 1
     }
 
-    const item = this[index]
-    return score === item
-      ? 0
-      : this._compare(score, item) * this._sign
+    if (index in this) {
+      const item = this[index]
+      return score === item
+        ? 0
+        : this._compare(score, item) * this._sign
+    }
+
+    // return undefined
   }
 
   _find (score, min, max) {
     const r_min = this.match(score, min)
+
+    // Match
     if (r_min === 0) {
       return [min, min]
     }
@@ -47,6 +64,8 @@ module.exports = class SequencedArray extends Array {
       return [min, min + 1]
     }
 
+    // r_min > 0 || r_min === undefined
+
     const r_max = this.match(score, max)
     if (r_max === 0) {
       return [max, max]
@@ -56,9 +75,15 @@ module.exports = class SequencedArray extends Array {
       return [max, max + 1]
     }
 
+    // r_max < 0 || r_max === undefined
+
     // There is no items between min and max
     if (min + 1 === max) {
       return [min, max]
+    }
+
+    if (r_min === undefined || r_max === undefined) {
+      return this._find(score, min + 1, max - 1)
     }
 
     const mid = Math.floor((min + max) / 2)
@@ -73,9 +98,13 @@ module.exports = class SequencedArray extends Array {
         : this._find(score, mid + 1, max - 1)
     }
 
-    return mid - 1 === min
-      ? [min, mid]
-      : this._find(score, min + 1, mid - 1)
+    if (r_mid < 0) {
+      return mid - 1 === min
+        ? [min, mid]
+        : this._find(score, min + 1, mid - 1)
+    }
+
+    return this._find(score, min + 1, max - 1)
   }
 
   find (score) {

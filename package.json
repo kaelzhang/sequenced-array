@@ -1,7 +1,7 @@
 {
   "name": "sequenced-array",
   "version": "1.0.0",
-  "description": "sequenced-array",
+  "description": "The sequenced array class which maintains sorted order.",
   "main": "src/index.js",
   "scripts": {
     "test": "nyc ava --timeout=10s",
@@ -17,7 +17,12 @@
     "url": "git://github.com/kaelzhang/sequenced-array.git"
   },
   "keywords": [
-    "sequenced-array"
+    "sequenced-array",
+    "array",
+    "order",
+    "sorted order",
+    "desc",
+    "asc"
   ],
   "engines": {
     "node": ">= 6"

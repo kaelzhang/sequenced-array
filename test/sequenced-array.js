@@ -1,5 +1,4 @@
 const test = require('ava')
-const log = require('util').debuglog('sequenced-array')
 const SequencedArray = require('../src')
 
 const runOne = (array, item, expected, desc, compare) => {
@@ -8,10 +7,9 @@ const runOne = (array, item, expected, desc, compare) => {
   } => ${
     JSON.stringify(expected)}`
   test(message, t => {
-    const sa = new SequencedArray(array, {desc, compare})
-    if (array.length === 1 && array[0] === 0) {
-      sa.push(0)
-    }
+    const sa = array instanceof SequencedArray
+      ? array
+      : new SequencedArray(array, {desc, compare})
 
     const result = sa.insert(item)
     t.deepEqual(result, expected, message)
@@ -66,3 +64,40 @@ const run = (sign, desc = false) => length => {
 
 createArray(10).forEach(run(1))
 createArray(10).forEach(run(- 1, true))
+
+const orderBook = [
+  {price: 1, amount: 2},
+  {price: 2, amount: 10},
+  {price: 3, amount: 12}
+]
+
+runOne(orderBook, {
+  price: 2.5, amount: 5
+}, {
+  index: 2,
+  inserted: true
+}, false, (a, b) => a.price - b.price)
+
+runOne((() => {
+  const arr = new SequencedArray(4)
+  arr[2] = 2
+  return arr
+})(), 3, {
+  index: 3,
+  inserted: true
+})
+
+runOne((() => {
+  const arr = new SequencedArray(5)
+  arr[0] = 0
+  arr[4] = 4
+  return arr
+})(), 3, {
+  index: 3,
+  inserted: true
+})
+
+runOne(new SequencedArray(4), 3, {
+  index: 2,
+  inserted: true
+})
