@@ -44,7 +44,7 @@ new SequencedArray([])
 // creates an array of length 10 with 10 empty items.
 new SequencedArray(10)
 
-// creates an array of length 10 with 10 empty items.
+// creates an array of [1, 2, 3]
 new SequencedArray([1, 2, 3])
 
 // creates an order book which puts the highest bid at the top
