@@ -52,13 +52,13 @@ const orderBook = new SequencedArray([], {
   desc: true,
   compare: (a, b) => a.price - b.price
 })
+orderBook.insert({price: 2, amount: 1})
 orderBook.insert({price: 3, amount: 2})
 orderBook.insert({price: 1, amount: 1})
-orderBook.insert({price: 2, amount: 1})
 
-console.log(orderBook[0])   // {price: 1, amount: 1}
+console.log(orderBook[0])   // {price: 3, amount: 2}
 console.log(orderBook[1])   // {price: 2, amount: 1}
-console.log(orderBook[2])   // {price: 3, amount: 2}
+console.log(orderBook[2])   // {price: 1, amount: 2}
 ```
 
 ### match(item, index): number | undefined
