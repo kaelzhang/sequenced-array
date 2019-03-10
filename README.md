@@ -15,7 +15,7 @@
 
 # sequenced-array
 
-The sequenced array class which maintains sorted order with time complexity `O(logN)`
+The sequenced array class which maintains sorted order with time complexity `O(logN)` by using binary search algorithm.
 
 ## Install
 
