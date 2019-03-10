@@ -2,18 +2,20 @@ const DEFAULT_COMPARE = (a, b) => a - b
 
 const isSingleItemArray = array => Array.isArray(array) && array.length === 1
 
-const createArgs = init => Array.isArray(init)
-  ? init.length === 1
-    ? []
-    : init
-  : [init]
+const createArgs = (init, length) => length
+  ? Array.isArray(init)
+    ? init.length === 1
+      ? []
+      : init
+    : [init]
+  : []
 
 module.exports = class SequencedArray extends Array {
   constructor (init, {
     desc,
     compare = DEFAULT_COMPARE
   } = {}) {
-    super(...createArgs(init))
+    super(...createArgs(init, arguments.length))
 
     // new Array(1, 2)     -> [1, 2]
     // new Array(1)        -> [<1 empty item>] -> WTF!

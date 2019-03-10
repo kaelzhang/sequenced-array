@@ -101,3 +101,7 @@ runOne(new SequencedArray(4), 3, {
   index: 2,
   inserted: true
 })
+
+test('no args', t => {
+  t.is(new SequencedArray().length, 0)
+})

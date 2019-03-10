@@ -50,6 +50,8 @@ Creates a `SequencedArray`
 ```js
 // creates an empty array
 new SequencedArray([])
+// or
+new SequencedArray()
 
 // creates an array of length 10 with 10 empty items.
 new SequencedArray(10)
