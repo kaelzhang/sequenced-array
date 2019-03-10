@@ -1,6 +1,6 @@
 {
   "name": "sequenced-array",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "The sequenced array class which maintains sorted order with time complexity O(logN)",
   "main": "src/index.js",
   "scripts": {

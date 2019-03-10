@@ -17,6 +17,10 @@
 
 The sequenced array class which maintains sorted order with time complexity `O(logN)` by using binary search algorithm.
 
+In most situations, the worst-case performance is `O(longN)` except for the cases that there are `<empty item>`s in the array.
+
+If each item of the array is an empty item which is the worst case, the time complexity is `O(N)`, because we need to compare all items of the array to determine an insert point.
+
 ## Install
 
 ```sh
