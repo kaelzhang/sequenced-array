@@ -10,6 +10,8 @@ const createArgs = (init, length) => length
     : [init]
   : []
 
+const define = (host, key, value) => Object.defineProperty(host, key, {value})
+
 module.exports = class SequencedArray extends Array {
   constructor (init, {
     desc,
@@ -24,12 +26,15 @@ module.exports = class SequencedArray extends Array {
     }
 
     // Default to low -> high
-    this._sign = desc
-      ? - 1
-      : 1
+    define(
+      this, '_sign',
+      desc
+        ? - 1
+        : 1
+    )
 
     // Supports to compare things that are not numbers
-    this._compare = compare
+    define(this, '_compare', compare)
   }
 
   // < 0 : not satisfy
