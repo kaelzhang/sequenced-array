@@ -95,7 +95,7 @@ arr.match(3, 2)     // 1
 arr.match(2, 2)     // 0
 ```
 
-### array.find(item): [number, number]
+### array.locate(item): [number, number]
 
 Finds which location should `item` be located at.
 
@@ -104,10 +104,10 @@ Returns `[min, max]`
 - Otherwise, it indicates that `item` could be inserted between index `min` and index `max`
 
 ```js
-new SequencedArray([1, 2, 3, 4]).find(2.5)  // [1, 2]
-new SequencedArray([1, 2, 3, 4]).find(2)    // [1, 1]
+new SequencedArray([1, 2, 3, 4]).locate(2.5)  // [1, 2]
+new SequencedArray([1, 2, 3, 4]).locate(2)    // [1, 1]
 
-new SequencedArray([1, 2, 3, 4]).find(0)
+new SequencedArray([1, 2, 3, 4]).locate(0)
 // [-1, 0]
 // `0` should be placed before `1`(array[0])
 ```

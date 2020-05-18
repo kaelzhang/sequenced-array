@@ -55,7 +55,7 @@ module.exports = class SequencedArray extends Array {
     // return undefined
   }
 
-  _find (score, min, max) {
+  _locate (score, min, max) {
     const r_min = this.match(score, min)
 
     // Match
@@ -90,7 +90,7 @@ module.exports = class SequencedArray extends Array {
     }
 
     if (r_min === undefined || r_max === undefined) {
-      return this._find(score, min + 1, max - 1)
+      return this._locate(score, min + 1, max - 1)
     }
 
     // else: r_min > 0 && r_max < 0
@@ -104,28 +104,28 @@ module.exports = class SequencedArray extends Array {
     if (r_mid > 0) {
       return mid + 1 === max
         ? [mid, max]
-        : this._find(score, mid + 1, max - 1)
+        : this._locate(score, mid + 1, max - 1)
     }
 
     if (r_mid < 0) {
       return mid - 1 === min
         ? [min, mid]
-        : this._find(score, min + 1, mid - 1)
+        : this._locate(score, min + 1, mid - 1)
     }
 
     // r_mid === undefined
     //  so that we can not determin the direction of next setup,
     //  just narrow down the range.
-    return this._find(score, min + 1, max - 1)
+    return this._locate(score, min + 1, max - 1)
   }
 
-  find (score) {
-    return this._find(score, 0, this.length - 1)
+  locate (score) {
+    return this._locate(score, 0, this.length - 1)
   }
 
   // Returns `number` the inserted index of the array
   insert (score) {
-    const [min, max] = this.find(score)
+    const [min, max] = this.locate(score)
     if (min === max) {
       return {
         index: max,
